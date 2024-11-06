@@ -1,9 +1,9 @@
-create database "PAICA1"
+-- create database "PAICA1"
 
 use PAICA1
 
 CREATE TABLE customer (
-    country_code VARCHAR(10),                
+    country_code CHAR(2),                
     customer_id VARCHAR(50),                  
     mobile_verified BIT,                      
     num_orders_last_50days INT,               
@@ -32,7 +32,10 @@ CREATE TABLE label (
     order_id VARCHAR(10),    
     customer_id VARCHAR(50),
 	is_fraud BIT,
-	PRIMARY KEY(country_code, order_id, customer_id)
+
+	PRIMARY KEY(country_code, order_id, customer_id),
+    FOREIGN KEY (country_code, customer_id) REFERENCES customer(country_code, customer_id),       
+    FOREIGN KEY (country_code, order_id) REFERENCES [order](country_code, order_id)
 );
 
 
