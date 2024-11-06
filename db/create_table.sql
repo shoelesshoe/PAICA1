@@ -1,4 +1,6 @@
-use PAI_CA1_test
+create database "PAICA1"
+
+use PAICA1
 
 CREATE TABLE customer (
     country_code VARCHAR(10),                
@@ -13,20 +15,7 @@ CREATE TABLE customer (
     PRIMARY KEY (country_code, customer_id)   
 );
 
-
-use PAI_CA1_test
-
-BULK INSERT customer
-FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_customer.csv'
-WITH (
-    FIELDTERMINATOR = ',', 
-    ROWTERMINATOR = '\n',   
-    FIRSTROW = 2            
-);
-
-use PAI_CA1_test
-
-CREATE TABLE order (
+CREATE TABLE [order] (
 	country_code CHAR(2),                
     order_id VARCHAR(10),    
     collect_type VARCHAR(50),            
@@ -38,19 +27,6 @@ CREATE TABLE order (
 	PRIMARY KEY(country_code, order_id)
 );
 
-
-use PAI_CA1_test
-
-BULK INSERT orders
-FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_order.csv'
-WITH (
-    FIELDTERMINATOR = ',',  
-    ROWTERMINATOR = '\n',   
-    FIRSTROW = 2            
-);
-
-use PAI_CA1_test
-
 CREATE TABLE label (
 	country_code CHAR(2),                
     order_id VARCHAR(10),    
@@ -60,7 +36,23 @@ CREATE TABLE label (
 );
 
 
-use PAI_CA1_test
+use PAICA1
+
+BULK INSERT customer
+FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_customer.csv'
+WITH (
+    FIELDTERMINATOR = ',', 
+    ROWTERMINATOR = '\n',   
+    FIRSTROW = 2            
+);
+
+BULK INSERT [order]
+FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_order.csv'
+WITH (
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    FIRSTROW = 2            
+);
 
 BULK INSERT label
 FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_labels.csv'
