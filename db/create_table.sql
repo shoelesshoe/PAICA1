@@ -26,7 +26,7 @@ WITH (
 
 use PAI_CA1_test
 
-CREATE TABLE orders (
+CREATE TABLE order (
 	country_code CHAR(2),                
     order_id VARCHAR(10),    
     collect_type VARCHAR(50),            
@@ -43,6 +43,27 @@ use PAI_CA1_test
 
 BULK INSERT orders
 FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_order.csv'
+WITH (
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    FIRSTROW = 2            
+);
+
+use PAI_CA1_test
+
+CREATE TABLE label (
+	country_code CHAR(2),                
+    order_id VARCHAR(10),    
+    customer_id VARCHAR(50),
+	is_fraud BIT,
+	PRIMARY KEY(country_code, order_id, customer_id)
+);
+
+
+use PAI_CA1_test
+
+BULK INSERT label
+FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_labels.csv'
 WITH (
     FIELDTERMINATOR = ',',  
     ROWTERMINATOR = '\n',   
