@@ -22,3 +22,28 @@ WITH (
     ROWTERMINATOR = '\n',   -- Change if your file uses a different row terminator
     FIRSTROW = 2            -- Set to 2 if your file has a header row
 );
+
+use Practical_AI_sk
+
+CREATE TABLE orders (
+	country_code CHAR(2),                
+    order_id VARCHAR(10),    
+    collect_type VARCHAR(50),            
+    payment_method VARCHAR(100),        
+    order_value DECIMAL(15, 2),          
+    num_items_ordered DECIMAL(10, 2),    
+    refund_value DECIMAL(15, 2),         
+    order_date DATE,                     
+	PRIMARY KEY(country_code, order_id)
+);
+
+
+use Practical_AI_sk
+
+BULK INSERT orders
+FROM 'C:\Users\P2300533\Documents\PAI\PAICA1\datasets\final_order.csv'
+WITH (
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n',   
+    FIRSTROW = 2            
+);
