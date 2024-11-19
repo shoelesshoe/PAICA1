@@ -21,7 +21,7 @@ CREATE TABLE [order] (
     collect_type VARCHAR(50),            
     payment_method VARCHAR(100),        
     order_value DECIMAL(15, 2),          
-    num_items_ordered DECIMAL(10, 2),    
+    num_items_ordered INT,    
     refund_value DECIMAL(15, 2),         
     order_date DATE,                     
 	PRIMARY KEY(country_code, order_id)
