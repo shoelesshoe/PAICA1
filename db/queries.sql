@@ -11,9 +11,9 @@ INNER JOIN [order] o
     AND l.order_id = o.order_id;
 
 
-USE PAICA1 -- Top 3 Payment Methods by Fraud Percentage
+USE PAICA1 -- Top 5 Payment Methods by Fraud Percentage
 
-SELECT TOP 3
+SELECT TOP 5
     o.payment_method,
     COUNT(CASE WHEN l.is_fraud = 1 THEN 1 END) AS fraud_count,
     COUNT(*) AS total_transactions,
@@ -29,7 +29,7 @@ ORDER BY
     fraud_percentage DESC;
 
 
-USE PAICA1 -- Top 5 Highest Spenders (Customer)
+USE PAICA1 -- Top 5 Highest Customer Spenders
 
 SELECT TOP 5 
     c.country_code,
@@ -48,3 +48,22 @@ GROUP BY
     c.country_code, c.customer_id
 ORDER BY 
     total_spent DESC;
+
+
+use PAICA1 -- Countries sorted according to Highest Fraud Value
+
+SELECT 
+    l.country_code,
+    COUNT(l.order_id) AS total_fraudulent_orders,
+    SUM(o.order_value) AS total_fraudulent_value
+FROM 
+    label l
+INNER JOIN [order] o
+    ON l.country_code = o.country_code 
+    AND l.order_id = o.order_id
+WHERE 
+    l.is_fraud = 1
+GROUP BY 
+    l.country_code
+ORDER BY 
+    total_fraudulent_value DESC;
