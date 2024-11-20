@@ -11,7 +11,7 @@ INNER JOIN [order] o
     AND l.order_id = o.order_id;
 
 
-USE PAICA1 -- Top 5 Payment Methods by Fraud Percentage
+-- Top 5 Payment Methods by Fraud Percentage
 
 SELECT TOP 5
     o.payment_method,
@@ -29,7 +29,7 @@ ORDER BY
     fraud_percentage DESC;
 
 
-USE PAICA1 -- Top 5 Highest Customer Spenders
+-- Top 5 Highest Customer Spenders
 
 SELECT TOP 5 
     c.country_code,
@@ -50,7 +50,7 @@ ORDER BY
     total_spent DESC;
 
 
-use PAICA1 -- Countries sorted according to Highest Fraud Value
+-- Countries sorted according to Highest Fraud Value
 
 SELECT 
     l.country_code,
@@ -67,3 +67,52 @@ GROUP BY
     l.country_code
 ORDER BY 
     total_fraudulent_value DESC;
+
+
+-- Top 5 Most Frequent Payment Methods
+
+SELECT TOP 5
+    c.country_code,
+    o.payment_method,
+    COUNT(*) AS total_transactions
+FROM 
+    customer c
+INNER JOIN label l
+    ON c.customer_id = l.customer_id
+INNER JOIN [order] o
+    ON l.order_id = o.order_id 
+    AND c.country_code = o.country_code
+GROUP BY 
+    c.country_code, o.payment_method
+ORDER BY 
+    total_transactions DESC;
+
+
+-- Top 3 Frequent Payment Methods per Country
+
+WITH RankedPayments AS (
+    SELECT 
+        c.country_code,
+        o.payment_method,
+        COUNT(*) AS total_transactions,
+        RANK() OVER (PARTITION BY c.country_code ORDER BY COUNT(*) DESC) AS rank
+    FROM 
+        customer c
+    INNER JOIN label l
+        ON c.customer_id = l.customer_id
+    INNER JOIN [order] o
+        ON l.order_id = o.order_id 
+        AND c.country_code = o.country_code
+    GROUP BY 
+        c.country_code, o.payment_method
+)
+SELECT 
+    country_code,
+    payment_method,
+    total_transactions
+FROM 
+    RankedPayments
+WHERE 
+    rank <= 3
+ORDER BY 
+    country_code, rank;
