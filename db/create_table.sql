@@ -9,7 +9,7 @@ CREATE TABLE customer (
     num_orders_last_50days INT,               
     num_cancelled_orders_last_50days INT,     
     num_refund_orders_last_50days INT,        
-    total_payment_last_50days DECIMAL(18, 2), 
+    total_payment_last_50days FLOAT, 
     num_associated_customers INT,             
     first_order_datetime DATETIME,            
     PRIMARY KEY (country_code, customer_id)   
@@ -20,9 +20,9 @@ CREATE TABLE [order] (
     order_id VARCHAR(10),    
     collect_type VARCHAR(50),            
     payment_method VARCHAR(100),        
-    order_value DECIMAL(15, 2),          
+    order_value FLOAT,          
     num_items_ordered INT,    
-    refund_value DECIMAL(15, 2),         
+    refund_value FLOAT,         
     order_date DATE,                     
 	PRIMARY KEY(country_code, order_id)
 );
@@ -42,7 +42,7 @@ CREATE TABLE label (
 use PAICA1
 
 BULK INSERT customer
-FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_customer.csv'
+FROM 'C:\SP\Year 2 Sem 2\Practical AI (PAI)\CA1\PAICA1\datasets\final_customer.csv'
 WITH (
     FIELDTERMINATOR = ',', 
     ROWTERMINATOR = '\n',   
@@ -50,7 +50,7 @@ WITH (
 );
 
 BULK INSERT [order]
-FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_order.csv'
+FROM 'C:\SP\Year 2 Sem 2\Practical AI (PAI)\CA1\PAICA1\datasets\final_order.csv'
 WITH (
     FIELDTERMINATOR = ',',  
     ROWTERMINATOR = '\n',   
@@ -58,7 +58,7 @@ WITH (
 );
 
 BULK INSERT label
-FROM 'C:\Users\p2308924\Practical AI (PAI)\Github CA\PAICA1\Datasets\final_labels.csv'
+FROM 'C:\SP\Year 2 Sem 2\Practical AI (PAI)\CA1\PAICA1\datasets\final_labels.csv'
 WITH (
     FIELDTERMINATOR = ',',  
     ROWTERMINATOR = '\n',   
